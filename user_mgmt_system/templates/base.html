@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Portal</title>
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/style.css">
+  </head>
+
+  <body>
+    <header>
+      <nav id="main-nav" class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container">
+          <h1><a href="{{ url_for('core.index') }}" class="navbar-brand">Users Portal</a></h1>
+          <button type="button" class="navbar-toggler text-light" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse my-2" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item m-2"><a href="{{ url_for('core.index') }}" class="nav-link text-light">Home</a></li>
+              <li class="nav-item m-2"><a href="{{ url_for('core.info') }}" class="nav-link text-light">About</a></li>
+              <li class="nav-item m-2"><a href="{{ url_for('core.contact') }}" class="nav-link text-light">Contact</a></li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item m-2"><a href="{{ url_for('users.logout') }}" class="nav-link text-light btn btn-outline-danger btn-sm">Logout</a></li>
+              {% else %}
+              <li class="nav-item m-2"><a href="{{ url_for('users.login') }}" class="nav-link text-light btn btn-outline-blue btn-sm">Login</a></li>
+              {% endif %}
+              <li class="nav-item m-2"><a href="{{ url_for('users.register') }}" class="nav-link text-light btn btn-blue btn-sm">Register</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center py-5">
+      <p class="m-0">
+        Copyright &copy; <span id="year"></span> User Portal
+      </p>
+    </footer>
+
+  </body>
+  <script type="text/javascript" src="static/js/jquery.js"></script>
+  <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="static/js/all.js"></script>
+
+  <script type="text/javascript">
+    // Get the current year for the copyright text
+    $('#year').text(new Date().getFullYear());
+
+  </script>
+</html>

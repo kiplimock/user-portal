@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="hero" class="bg-primary">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 p-3 d-flex flex-column justify-content-center">
+        <h1 class="text-light-1 mb-2">An Easier Way To Manage Your Users</h1>
+        <h4 class="text-light-2 mb-4">We are a team of web developers specialised in user management</h4>
+        <a href="{{ url_for('users.register') }}" class="btn btn-blue text-white align-self-start">Learn More</a>
+      </div>
+      <div class="col-md-6 p-3">
+        <img src="static/img/hero-img.png" class="img-fluid" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

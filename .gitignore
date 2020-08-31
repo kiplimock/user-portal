@@ -1,0 +1,5 @@
+__scss__/
+__pycache__/
+core/__pycache__/
+error_pages/__pycache__/
+users/__pycache__/

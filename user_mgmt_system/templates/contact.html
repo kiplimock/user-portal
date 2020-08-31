@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+  <section id="contact">
+    <div class="container">
+      <div class="row my-3">
+        <div class="col-md-4">
+          <div id="contact-card" class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 pt-3">
+                  <span class="fas fa-map-marked-alt fa-2x"></span>
+                </div>
+                <div class="col-md-9">
+                  <h4>Location</h4>
+                  <p>21st Street, New York, NY 432097</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 pt-3">
+                  <span class="fas fa-envelope-square fa-2x"></span>
+                </div>
+                <div class="col-md-9">
+                  <h4>Email</h4>
+                  <p>info@example.com</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 pt-3">
+                  <span class="fas fa-phone-alt fa-2x"></span>
+                </div>
+                <div class="col-md-9">
+                  <h4>Phone</h4>
+                  <p>+254 720 000 000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <form action="{{ url_for('core.index') }}" method="post">
+                <h3 class="mb-3">Get In Touch</h3>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

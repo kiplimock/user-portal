@@ -1,0 +1,37 @@
+body {
+  overflow-x: scroll; }
+
+#hero .text-light-1 {
+  color: #f1f1f1; }
+#hero .text-light-2 {
+  color: rgba(241, 241, 241, 0.6); }
+
+.btn-blue {
+  background-color: #47b2e4; }
+
+.btn-outline-blue {
+  border: 2px solid;
+  border-color: #47b2e4; }
+
+.btn-outline-blue:active,
+.btn-outline-blue:hover {
+  background-color: #47b2e4; }
+
+#contact .fas {
+  color: #37517e; }
+#contact .card {
+  border-top: 3px solid #37517e;
+  border-bottom: 3px solid #37517e; }
+
+#login-band {
+  background: rgba(55, 81, 126, 0.8); }
+
+@media (max-width: 767px) {
+  #main-nav .nav-link {
+    display: inline; }
+  #main-nav .btn {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem; }
+
+  #contact #contact-card {
+    text-align: center; } }

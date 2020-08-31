@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="login">
+  <div class="row">
+    <div id="login-band" class="d-none d-inline-block col-md-6"></div>
+    <div class="col-md-6">
+      <div class="container p-5">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Login</h4>
+          </div>
+          <div class="card-body">
+            <form method="POST">
+              {{ form.hidden_tag() }}
+              <div class="form-group mb-5">
+                {{ form.email.label() }}
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                  {{ form.email( class="form-control") }}
+                </div>
+              </div>
+
+              <div class="form-group mb-5">
+                {{ form.password.label() }}
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                  {{ form.password( class="form-control" ) }}
+                </div>
+              </div>
+              {{ form.submit( class="btn btn-block btn-primary" ) }}
+            </form>
+            <p class="text-center mt-3">
+              <small>Have no account?
+                <a href="{{ url_for('users.register') }}" class="text-warning">Register</a>
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
