@@ -1,4 +1,4 @@
-__scss__/
+scss/
 __pycache__/
 core/__pycache__/
 error_pages/__pycache__/

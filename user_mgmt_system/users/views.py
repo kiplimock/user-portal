@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect, Blueprint
+from flask import render_template, request, url_for, redirect, Blueprint, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from user_mgmt_system import db
 from user_mgmt_system.models import User
@@ -6,27 +6,32 @@ from user_mgmt_system.users.forms import RegistrationForm, LoginForm
 
 users = Blueprint('users', __name__)
 
+
 @users.route('/users', methods=['GET','POST'])
-@login_required
 def view_users():
     page = request.args.get('page',1,type=int)
-    name = current_user.first_name+' '+current_user.last_name
-    users = User.query.order_by(User.first_name.asc()).paginate(page=page, per_page=10)
-    return render_template('users.html', name=name, users=users)
+    all_users = User.query.order_by(User.id.asc()).paginate(page=page, per_page=5, error_out=False)
+    users = User.query.all()
+    next_url = url_for('users.view_users', page=all_users.next_num) if all_users.has_next else None
+    prev_url = url_for('users.view_users', page=all_users.prev_num) if all_users.has_prev else None
+    return render_template('users.html', users=users, all_users=all_users.items, next_url=next_url, prev_url=prev_url)
+
 
 # --------- REGISTER --------- #
 @users.route('/register', methods=['GET','POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(first_name = form.first_name.data,
-                    last_name = form.last_name.data,
+        user = User(name = form.name.data,
                     email = form.email.data,
+                    gender = form.gender.data,
+                    user_type = form.user_type.data,
                     password = form.password.data)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form)
+
 
 # --------- LOG IN --------- #
 @users.route('/login', methods=['GET','POST'])
@@ -42,8 +47,19 @@ def login():
             return redirect(next)
     return render_template('login.html', form=form)
 
+
 # --------- LOG OUT --------- #
 @users.route('/logout')
 def logout():
     logout_user()
+    return redirect(url_for('core.index'))
+
+
+# --------- DELETE --------- #
+@users.route('/<int:user_id>/delete', methods=["GET","POST"])
+@login_required
+def delete(user_id):
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
     return redirect(url_for('core.index'))

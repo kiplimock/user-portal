@@ -1,52 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="container">
+  <div id="user_table" class="container">
     <table class="table table-striped">
       <thead>
         <tr>
           <th>ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Gender</th>
+          <th>Name</th>
           <th>Email</th>
+          <th>Gender</th>
+          <th>Type of User</th>
           {% if current_user.email == 'kiplimock@gmail.com' %}
           <th>Action</th>
           {% endif %}
         </tr>
       </thead>
       <tbody>
-        {% for user in users.items %}
+        {% for user in all_users %}
         <tr>
           <td>{{ user.id }}</td>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.last_name }}</td>
-          <td>{{ user.gender }}</td>
+          <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
-          {% if current_user.email == 'kiplimock@gmail.com' %}
-          <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delModal">Delete</button></td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.user_type }}</td>
+          {% if current_user.user_type == 'admin' %}
+          <td><a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#delModal">Delete</a></td>
+
+          <!-- DELETE MODAL -->
+          <div id="delModal" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete User?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete this user?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <form action="/{{ user.id }}/delete">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           {% endif %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
 
+
+
     <nav>
       <ul class="pagination pagination-sm">
-        {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
-        {% if users.page == page_num %}
+        {% if prev_url %}
         <li class="page-link active disabled">
-          <a href="{{ url_for('users.view_users', page=page_num) }}" class="page-link">
-            <span>&laquo;</span>
-          </a>
-        </li>
-        {% else %}
-        <li class="page-link">
-          <a href="{{ url_for('users.view_users', page=page_num) }}" class="page-link">
-            <span>&raquo;</span>
+          <a href="{{ prev_url }}" class="page-link">
+            <span class="fas fa-angle-double-left"></span>
           </a>
         </li>
         {% endif %}
-        {% endfor %}
+        {% if next_url %}
+        <li class="page-link">
+          <a href="{{ next_url }}" class="page-link">
+            <span class="fas fa-angle-double-right"></span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </nav>
   </div>

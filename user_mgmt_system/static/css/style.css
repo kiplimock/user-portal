@@ -26,6 +26,9 @@ body {
 #login-band {
   background: rgba(55, 81, 126, 0.8); }
 
+.page-link {
+  border: None; }
+
 @media (max-width: 767px) {
   #main-nav .nav-link {
     display: inline; }
@@ -33,5 +36,20 @@ body {
     padding-left: 0.8rem;
     padding-right: 0.8rem; }
 
+  #heroText {
+    text-align: center; }
+    #heroText a {
+      align-self: center; }
+
   #contact #contact-card {
-    text-align: center; } }
+    text-align: center; }
+
+  #user_table th:nth-child(3),
+  #user_table th:nth-child(4) {
+    display: none; }
+  #user_table td:nth-child(3),
+  #user_table td:nth-child(4) {
+    display: none; } }
+@media (min-width: 767px) {
+  #heroText a {
+    align-self: flex-start; } }

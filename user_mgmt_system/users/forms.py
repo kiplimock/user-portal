@@ -5,10 +5,10 @@ from wtforms.validators import DataRequired, Email, EqualTo
 from user_mgmt_system.models import User
 
 class RegistrationForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
-    gender = SelectField('Gender', validators=[DataRequired()], choices=[('male','Male'),('female','Female')], coerce=str)
+    name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    gender = SelectField('Gender', validators=[DataRequired()], choices=[('male','Male'),('female','Female')], coerce=str)
+    user_type = SelectField('Type of User', validators=[DataRequired()], choices=[('admin','Administrator'),('general','General')], coerce=str)
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('pass_confirm', message='Passwords must match!')])
     pass_confirm = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')

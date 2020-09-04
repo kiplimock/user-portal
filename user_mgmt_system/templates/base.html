@@ -23,6 +23,7 @@
               <li class="nav-item m-2"><a href="{{ url_for('core.index') }}" class="nav-link text-light">Home</a></li>
               <li class="nav-item m-2"><a href="{{ url_for('core.info') }}" class="nav-link text-light">About</a></li>
               <li class="nav-item m-2"><a href="{{ url_for('core.contact') }}" class="nav-link text-light">Contact</a></li>
+              <li class="nav-item m-2"><a href="{{ url_for('users.view_users') }}" class="nav-link text-light">Users</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item m-2"><a href="{{ url_for('users.logout') }}" class="nav-link text-light btn btn-outline-danger btn-sm">Logout</a></li>
               {% else %}
@@ -34,6 +35,15 @@
         </div>
       </nav>
     </header>
+
+    {% if current_user.is_authenticated %}
+    <div class="bg-primary">
+      <div class="container py-1 text-right">
+        <p class="lead text-white"> Welcome {{ current_user.name.capitalize() }} </p>
+      </div>
+    </div>
+    {% endif %}
+
     {% block content %}
 
     {% endblock %}
