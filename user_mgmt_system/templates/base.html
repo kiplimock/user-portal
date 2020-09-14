@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Portal</title>
-    <link rel="stylesheet" href="static/css/all.css">
-    <link rel="stylesheet" href="static/css/bootstrap.css">
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
 
   <body>
@@ -39,7 +39,7 @@
     {% if current_user.is_authenticated %}
     <div class="bg-primary">
       <div class="container py-1 text-right">
-        <p class="lead text-white"> Welcome {{ current_user.name.capitalize() }} </p>
+        <p class="lead text-white"> Welcome {{ current_user.name.split()[0] }} </p>
       </div>
     </div>
     {% endif %}

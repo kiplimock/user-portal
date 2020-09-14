@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect, Blueprint, abort
+from flask import render_template, request, url_for, redirect, Blueprint, abort, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from user_mgmt_system import db
 from user_mgmt_system.models import User
@@ -39,12 +39,17 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user.check_password(form.password.data) and user is not None:
-            login_user(user)
-            next = request.args.get('next')
-            if next == None or not next[0] == '/':
-                next = url_for('core.index')
-            return redirect(next)
+        if user is None:
+            flash("The email you entered is not registered!")
+        else:
+            if user.check_password(form.password.data):
+                login_user(user)
+                next = request.args.get('next')
+                if next == None or not next[0] == '/':
+                    next = url_for('core.index')
+                return redirect(next)
+            else:
+                flash("The password you entered is invalid")
     return render_template('login.html', form=form)
 
 
