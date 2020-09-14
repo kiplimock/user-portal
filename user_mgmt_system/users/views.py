@@ -2,11 +2,11 @@ from flask import render_template, request, url_for, redirect, Blueprint, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from user_mgmt_system import db
 from user_mgmt_system.models import User
-from user_mgmt_system.users.forms import RegistrationForm, LoginForm
+from user_mgmt_system.users.forms import RegistrationForm, LoginForm, EditUserForm
 
 users = Blueprint('users', __name__)
 
-
+# --------- USERS --------- #
 @users.route('/users', methods=['GET','POST'])
 def view_users():
     page = request.args.get('page',1,type=int)
@@ -54,6 +54,24 @@ def logout():
     logout_user()
     return redirect(url_for('core.index'))
 
+
+@users.route('/<int:user_id>/update', methods=["GET","POST"])
+@login_required
+def edit(user_id):
+    form = EditUserForm()
+    user = User.query.get(user_id)
+    if form.validate_on_submit():
+        user.name = form.name.data
+        user.email = form.email.data
+        user.user_type = form.user_type.data
+        db.session.commit()
+        return redirect(url_for('core.index'))
+
+    elif request.method == 'GET':
+        form.name.data = user.name
+        form.email.data = user.email
+        form.user_type.data = user.user_type
+    return render_template('edit_user.html', form=form, user=user)
 
 # --------- DELETE --------- #
 @users.route('/<int:user_id>/delete', methods=["GET","POST"])

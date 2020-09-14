@@ -3,15 +3,19 @@
   <div id="user_table" class="container">
     <table class="table table-striped">
       <thead>
+        {% if users|length == 0 %}
+        <div class="pt-4">
+          <p class="lead m-0">There are no users registered yet</p>
+        </div>
+        {% else %}
+
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
           <th>Gender</th>
           <th>Type of User</th>
-          {% if current_user.email == 'kiplimock@gmail.com' %}
           <th>Action</th>
-          {% endif %}
         </tr>
       </thead>
       <tbody>
@@ -22,8 +26,15 @@
           <td>{{ user.email }}</td>
           <td>{{ user.gender }}</td>
           <td>{{ user.user_type }}</td>
-          {% if current_user.user_type == 'admin' %}
-          <td><a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#delModal">Delete</a></td>
+          {% if current_user.user_type == 'admin' or current_user.email == user.email %}
+          <td>
+            <a class="btn btn-danger btn-sm text-white mr-2" data-toggle="modal" data-target="#delModal">
+              Delete
+            </a>
+            <a class="btn btn-warning btn-sm text-white" href="/{{ user.id }}/update">
+              Edit
+            </a>
+          </td>
 
           <!-- DELETE MODAL -->
           <div id="delModal" class="modal">
@@ -47,9 +58,19 @@
               </div>
             </div>
           </div>
+          {% else %}
+          <td>
+            <a class="btn btn-danger btn-sm text-white disabled mr-2" data-toggle="modal" data-target="#delModal">
+              Delete
+            </a>
+            <a class="btn btn-warning btn-sm text-white disabled" href="/{{ user.id }}/update">
+              Edit
+            </a>
+          </td>
           {% endif %}
         </tr>
         {% endfor %}
+        {% endif %}
       </tbody>
     </table>
 

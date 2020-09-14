@@ -2,7 +2,13 @@
 {% block content %}
 <section id="register">
   <div class="row">
-
+    {% if current_user.is_authenticated %}
+    <div class="container">
+      <div class="py-5">
+        <p>{{ current_user.name.split()[0] }}, you have already regitered.</p>
+      </div>
+    </div>
+    {% else %}
     <div id="login-band" class="d-none d-lg-block col-lg-6">
 
     </div>
@@ -71,6 +77,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}
