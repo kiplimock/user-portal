@@ -4,18 +4,17 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_migrate import Migrate
 
 # app init
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 
 # DB setup
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost/users'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:1234@postgres-users/users"
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://pdogkmcqkaiono:88b8a26a9d4a00ff5a9acacfa984258051e83bbcb5e220e28ec9ed266f453a63@ec2-3-226-231-4.compute-1.amazonaws.com:5432/d4kmrclpsjjhm9"
@@ -25,7 +24,6 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-Migrate(app,db)
 
 # login configs
 login_manager = LoginManager()
